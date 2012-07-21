@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="hentaiMetaClass" default="run">
+	
+    <target name="compile">
+    	<javac srcdir="src/main/java"
+               destdir="target/classes"
+    	/>
+    	<javac srcdir="."
+    		   includesfile="src/main/java/metaclass/Main.java"
+    	/>
+    </target>
+	
+	<target name="rewrite" depends="compile">
+	      <java classpath=".:target/classes" 
+	      	classname="metaclass.Rewriter">
+	      	<arg value="target/classes/metaclass/Main.class"/>
+	      </java>
+	</target>
+	
+	<target name="run" depends="rewrite">
+		  <echo message="run Main"/>
+		  <java classpath=".:target/classes"
+		      	classname="metaclass.Main"
+		  />	        
+	</target>
+	
+	<target name="clean">
+		<delete file="target/classes/*.class"/>
+		<delete dir="target/classes" />
+	    <mkdir dir="target/classes" />
+	</target>
+	
+	<target name="all" depends="rewrite" />
+</project>
